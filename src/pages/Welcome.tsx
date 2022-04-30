@@ -1,63 +1,107 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Alert, Typography } from 'antd';
-import { useIntl, FormattedMessage } from 'umi';
-import styles from './Welcome.less';
+import { Tabs, Form, Select, Button, Radio, Card } from 'antd';
+import { environmentList } from '@/common/data';
+// import styles from './Welcome.less';
 
-const CodePreview: React.FC = ({ children }) => (
-  <pre className={styles.pre}>
-    <code>
-      <Typography.Text copyable>{children}</Typography.Text>
-    </code>
-  </pre>
-);
+const { TabPane } = Tabs;
+const { Option } = Select;
 
 const Welcome: React.FC = () => {
-  const intl = useIntl();
+  const onFinish = (values: any) => {
+    console.log('Success:', values);
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+  };
 
   return (
     <PageContainer>
       <Card>
-        <Alert
-          message={intl.formatMessage({
-            id: 'pages.welcome.alertMessage',
-            defaultMessage: 'Faster and stronger heavy-duty components have been released.',
-          })}
-          type="success"
-          showIcon
-          banner
-          style={{
-            margin: -12,
-            marginBottom: 24,
-          }}
-        />
-        <Typography.Text strong>
-          <FormattedMessage id="pages.welcome.advancedComponent" defaultMessage="Advanced Form" />{' '}
-          <a
-            href="https://procomponents.ant.design/components/table"
-            rel="noopener noreferrer"
-            target="__blank"
-          >
-            <FormattedMessage id="pages.welcome.link" defaultMessage="Welcome" />
-          </a>
-        </Typography.Text>
-        <CodePreview>yarn add @ant-design/pro-table</CodePreview>
-        <Typography.Text
-          strong
-          style={{
-            marginBottom: 12,
-          }}
-        >
-          <FormattedMessage id="pages.welcome.advancedLayout" defaultMessage="Advanced layout" />{' '}
-          <a
-            href="https://procomponents.ant.design/components/layout"
-            rel="noopener noreferrer"
-            target="__blank"
-          >
-            <FormattedMessage id="pages.welcome.link" defaultMessage="Welcome" />
-          </a>
-        </Typography.Text>
-        <CodePreview>yarn add @ant-design/pro-layout</CodePreview>
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="默认" key="1">
+            <Form
+              name="basic"
+              labelCol={{ span: 4 }}
+              wrapperCol={{ span: 10 }}
+              initialValues={{ version: 'dev' }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
+            >
+              <Form.Item
+                label="环境"
+                name="environment"
+                rules={[{ required: true, message: '请选择环境' }]}
+              >
+                <Select>
+                  {environmentList.map((item) => {
+                    return <Option value={item.key}>{item.value}</Option>;
+                  })}
+                </Select>
+              </Form.Item>
+              <Form.Item name="version" label="版本" wrapperCol={{ span: 16 }}>
+                <Radio.Group>
+                  <Radio value={'dev'}>开发版</Radio>
+                  <Radio value={'experience'}>体验版</Radio>
+                </Radio.Group>
+              </Form.Item>
+
+              <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Button type="primary" htmlType="submit">
+                  确认
+                </Button>
+              </Form.Item>
+            </Form>
+          </TabPane>
+          <TabPane tab="指定分支" key="2">
+            <Form
+              name="basic"
+              labelCol={{ span: 4 }}
+              wrapperCol={{ span: 10 }}
+              initialValues={{ version: 'dev' }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
+            >
+              <Form.Item
+                label="分支"
+                name="branch"
+                rules={[{ required: true, message: '请选择环境' }]}
+              >
+                <Select>
+                  {environmentList.map((item) => {
+                    return <Option value={item.key}>{item.value}</Option>;
+                  })}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                label="环境"
+                name="environment"
+                rules={[{ required: true, message: '请选择环境' }]}
+              >
+                <Select>
+                  {environmentList.map((item) => {
+                    return <Option value={item.key}>{item.value}</Option>;
+                  })}
+                </Select>
+              </Form.Item>
+              <Form.Item name="version" label="版本" wrapperCol={{ span: 16 }}>
+                <Radio.Group>
+                  <Radio value={'dev'}>开发版</Radio>
+                  <Radio value={'experience'}>体验版</Radio>
+                </Radio.Group>
+              </Form.Item>
+
+              <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Button type="primary" htmlType="submit">
+                  确认
+                </Button>
+              </Form.Item>
+            </Form>
+          </TabPane>
+        </Tabs>
       </Card>
     </PageContainer>
   );
