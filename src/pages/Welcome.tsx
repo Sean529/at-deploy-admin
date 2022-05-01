@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Tabs, Form, Select, Button, Radio, Card } from 'antd';
-import { environmentList } from '@/common/data';
+import { ENV_LIST } from '@/common/data';
 // import styles from './Welcome.less';
 
 const { TabPane } = Tabs;
@@ -25,22 +25,33 @@ const Welcome: React.FC = () => {
               name="basic"
               labelCol={{ span: 4 }}
               wrapperCol={{ span: 10 }}
-              initialValues={{ version: 'dev' }}
+              initialValues={{ version: 'dev', channel: 'weapp' }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
               <Form.Item
                 label="环境"
-                name="environment"
+                name="env"
                 rules={[{ required: true, message: '请选择环境' }]}
               >
                 <Select>
-                  {environmentList.map((item) => {
-                    return <Option value={item.key}>{item.value}</Option>;
+                  {ENV_LIST.map((item) => {
+                    return (
+                      <Option key={item.key} value={item.key}>
+                        {item.value}
+                      </Option>
+                    );
                   })}
                 </Select>
               </Form.Item>
+              <Form.Item name="channel" label="小程序" wrapperCol={{ span: 16 }}>
+                <Radio.Group>
+                  <Radio value={'weapp'}>微信</Radio>
+                  <Radio value={'alipay'}>支付宝</Radio>
+                </Radio.Group>
+              </Form.Item>
+
               <Form.Item name="version" label="版本" wrapperCol={{ span: 16 }}>
                 <Radio.Group>
                   <Radio value={'dev'}>开发版</Radio>
@@ -60,7 +71,7 @@ const Welcome: React.FC = () => {
               name="basic"
               labelCol={{ span: 4 }}
               wrapperCol={{ span: 10 }}
-              initialValues={{ version: 'dev' }}
+              initialValues={{ version: 'dev', channel: 'weapp' }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete="off"
@@ -71,21 +82,35 @@ const Welcome: React.FC = () => {
                 rules={[{ required: true, message: '请选择环境' }]}
               >
                 <Select>
-                  {environmentList.map((item) => {
-                    return <Option value={item.key}>{item.value}</Option>;
+                  {ENV_LIST.map((item) => {
+                    return (
+                      <Option key={item.key} value={item.key}>
+                        {item.value}
+                      </Option>
+                    );
                   })}
                 </Select>
               </Form.Item>
               <Form.Item
                 label="环境"
-                name="environment"
+                name="env"
                 rules={[{ required: true, message: '请选择环境' }]}
               >
                 <Select>
-                  {environmentList.map((item) => {
-                    return <Option value={item.key}>{item.value}</Option>;
+                  {ENV_LIST.map((item) => {
+                    return (
+                      <Option key={item.key} value={item.key}>
+                        {item.value}
+                      </Option>
+                    );
                   })}
                 </Select>
+              </Form.Item>
+              <Form.Item name="channel" label="小程序" wrapperCol={{ span: 16 }}>
+                <Radio.Group>
+                  <Radio value={'weapp'}>微信</Radio>
+                  <Radio value={'alipay'}>支付宝</Radio>
+                </Radio.Group>
               </Form.Item>
               <Form.Item name="version" label="版本" wrapperCol={{ span: 16 }}>
                 <Radio.Group>
