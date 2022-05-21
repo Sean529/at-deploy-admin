@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Tabs, Form, Select, Button, Radio, Card, Switch, Row, Col } from 'antd';
 import { ALPHA_BRANCH, ENV_LIST, FEATURES_BRANCH } from '@/common/data';
@@ -8,6 +8,12 @@ const { TabPane } = Tabs;
 const { Option } = Select;
 
 const Welcome: React.FC = () => {
+  const [form] = Form.useForm();
+  const branch = Form.useWatch('branch', form); // 监听 branch 字段变化， antd v4.20.0 新增的
+  const isMerge = Form.useWatch('isMerge', form); // 监听 branch 字段变化， antd v4.20.0 新增的
+
+  console.log('%c [ branch ]-14', 'font-size:13px; background:pink; color:#bf2c9f;', branch);
+
   const onFinish = (values: any) => {
     console.log('Success:', values);
   };
@@ -16,15 +22,21 @@ const Welcome: React.FC = () => {
     console.log('Failed:', errorInfo);
   };
 
+  useEffect(() => {
+    console.log('branch :>> ', branch);
+    // 请求接口
+  }, [branch]);
+
   return (
     <PageContainer>
       <Card>
         <Tabs defaultActiveKey="1">
           <TabPane tab="默认" key="1">
             <Form
+              form={form}
               name="basic"
               labelCol={{ span: 4 }}
-              wrapperCol={{ span: 10 }}
+              wrapperCol={{ span: 6 }}
               initialValues={{ version: 'dev', channel: 'weapp', isMerge: '0', env: 'uat' }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
@@ -51,17 +63,19 @@ const Welcome: React.FC = () => {
                     </Form.Item>
                   </Col>
                 </Row>
-                <Form.Item name="mergeBranch">
-                  <Select>
-                    {FEATURES_BRANCH.map((item) => {
-                      return (
-                        <Option key={item.key} value={item.key}>
-                          {item.value}
-                        </Option>
-                      );
-                    })}
-                  </Select>
-                </Form.Item>
+                {isMerge && (
+                  <Form.Item name="mergeBranch">
+                    <Select>
+                      {FEATURES_BRANCH.map((item) => {
+                        return (
+                          <Option key={item.key} value={item.key}>
+                            {item.value}
+                          </Option>
+                        );
+                      })}
+                    </Select>
+                  </Form.Item>
+                )}
               </Form.Item>
               <Form.Item
                 label="环境"
