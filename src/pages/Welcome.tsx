@@ -37,7 +37,7 @@ const Welcome: React.FC = () => {
               name="basic"
               labelCol={{ span: 4 }}
               wrapperCol={{ span: 6 }}
-              initialValues={{ version: 'dev', channel: 'weapp', isMerge: '0', env: 'uat' }}
+              initialValues={{ version: 'dev', plant: 'weapp', isMerge: '0', env: 'uat' }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete="off"
@@ -96,14 +96,18 @@ const Welcome: React.FC = () => {
               <Form.Item name="version" label="版本" wrapperCol={{ span: 16 }}>
                 <Radio.Group>
                   <Radio value={'dev'}>开发版</Radio>
-                  <Radio value={'experience'}>体验版</Radio>
+                  <Radio disabled value={'experience'}>
+                    体验版
+                  </Radio>
                 </Radio.Group>
               </Form.Item>
 
-              <Form.Item name="channel" label="平台" wrapperCol={{ span: 16 }}>
+              <Form.Item name="plant" label="平台" wrapperCol={{ span: 16 }}>
                 <Radio.Group>
                   <Radio value={'weapp'}>微信</Radio>
-                  <Radio value={'alipay'}>支付宝</Radio>
+                  <Radio disabled value={'alipay'}>
+                    支付宝
+                  </Radio>
                 </Radio.Group>
               </Form.Item>
 
